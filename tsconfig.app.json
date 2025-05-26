@@ -1,0 +1,14 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["env.d.ts", "./resources/js/**/*", "./resources/js/**/*.vue", "resources/js/App.vue", "resources/js/main.ts", "resources/js/vite-env.d.ts", "resources/js/layout", "resources/js/components", "resources/js/components/Headers/*.vue", "resources/js/lib", "resources/js/forms", "resources/js/router", "resources/js/types", "resources/js/types/*.ts"],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./resources/js/*"]
+    },
+    "types": ["@vue/runtime-core", "node"]
+  }
+}

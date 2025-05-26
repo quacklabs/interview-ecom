@@ -1,0 +1,76 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to .env file
+<Files .env>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# <IfModule mod_rewrite.c>
+#     <IfModule mod_negotiation.c>
+#         Options -MultiViews -Indexes
+#     </IfModule>
+
+#     # RewriteEngine On
+#     # RewriteCond %{REQUEST_FILENAME} -d [OR]
+#     # RewriteCond %{REQUEST_FILENAME} -f
+#     # RewriteRule ^ ^$1 [N]
+
+#     # # Handle Authorization Header
+#     # RewriteCond %{HTTP:Authorization} .
+#     # RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#     # # Redirect Trailing Slashes If Not A Folder...
+#     # RewriteCond %{REQUEST_FILENAME} !-d
+#     # RewriteCond %{REQUEST_URI} (.+)/$
+#     # RewriteRule ^ %1 [L,R=301]
+
+    
+
+
+#     RewriteEngine On
+
+#     # RewriteCond %{HTTP:Authorization} .
+#     # RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+#     RewriteCond %{HTTP:Authorization} ^(.*)
+#     RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+     
+#     RewriteCond %{REQUEST_FILENAME} -d [OR]
+#     RewriteCond %{REQUEST_FILENAME} -f
+#     RewriteRule ^ ^$1 [N]
+ 
+#     # RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
+#     # RewriteRule ^(.*)$ public/$1 
+ 
+#     # Handle Authorization Header 
+#     RewriteCond %{HTTP:Authorization} . 
+#     RewriteRule . - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#     # Handle Payment Webhook Update Header 
+#     RewriteCond %{HTTP:X_NOWPAYMENTS_SIG} . 
+#     RewriteRule . - [E=HTTP_X_NOWPAYMENTS_SIG:%{HTTP:X_NOWPAYMENTS_SIG}]
+
+#     # Send Requests To Front Controller...
+#     RewriteCond %{REQUEST_FILENAME} !-d
+#     RewriteCond %{REQUEST_FILENAME} !-f
+#     RewriteRule ^ index.php [L]
+
+# </IfModule>
