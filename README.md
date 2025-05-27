@@ -16,4 +16,9 @@ this will setup the app and seed the database
 `php artisan serve`
 `npm run dev`
 
+Login URL: http://localhost:8000/auth/login
+admin email: ad@min.dev
+admin password: 12345678
+
+
 
