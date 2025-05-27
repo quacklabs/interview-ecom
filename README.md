@@ -1,4 +1,4 @@
-Setup:
+##Setup:
 
 1. clone this repository
 2. run `composer install && npm install`
@@ -7,6 +7,9 @@ Setup:
 5. run `php artisan migrate:fresh --seed`
 
 this will setup the app and seed the database
-Run it:
+
+##Run it:
 `php artisan serve`
+`npm run dev`
+
 
