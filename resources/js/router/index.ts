@@ -126,6 +126,19 @@ const routes: Array<RouteRecordRaw> = [
       },
     ]
   },
+  // {
+  //   path: '/cart',
+  //   name: 'App',
+  //   component: AppLayout,
+  //   meta: { requiresAuth: true},
+  //   children: [
+  //     {
+  //       path: '/',
+  //       name: 'Account',
+  //       component: Cart
+  //     },
+  //   ]
+  // }
   { path: '/:pathMatch(.*)*', component: NotFound },
     
 ]
