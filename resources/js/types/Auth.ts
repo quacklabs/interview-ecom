@@ -30,7 +30,8 @@ interface User {
     dob: string
     country: string
     zip: string
-    roles: Array<string>
+    assigned_roles?: Array<string> | null
+    permissions: Array<string> | null
 }
 
 

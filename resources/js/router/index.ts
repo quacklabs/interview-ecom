@@ -146,12 +146,15 @@ router.beforeEach((to, from, next) => {
       } else {
         const rbac_enabled = to.matched.some(record => record.meta.rbac);
 
-        if(authHandler.user.assigned_roles.contains('admin')) {
+        if(rbac_enabled) {
           next()
-        } else {
-          next({name: 'Home'})
+        } else{
+          if(authHandler.user.assigned_roles.includes('admin')) {
+            next()
+          } else {
+            next({name: 'Home'})
+          }
         }
-        
       }
     } else {
       next();

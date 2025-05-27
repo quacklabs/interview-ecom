@@ -40,7 +40,7 @@ export const useAuth = () => {
           state.value.error = null,
           state.value.refreshTokenTimeout = null
         }
-        local.save('broker_user', response.data)
+        local.save('app_user', response.data)
         startRefreshTokenTimer()
         resolve(null)
       }).catch((error: any) => {
@@ -108,12 +108,12 @@ export const useAuth = () => {
   }
 
   const logout = () => {
-    local.remove('broker_user');
+    local.remove('app_user');
   }
 
   const loadSession = () => {
     try {
-      const client = local.get('_app_user')
+      const client = local.get('app_user')
       
       const authUser = client ? JSON.parse(client) : null
       if(authUser) {
@@ -136,7 +136,7 @@ export const useAuth = () => {
         user: newVal,
         token: token.value,
       }
-      local.save('_app_user', data);
+      local.save('app_user', data);
     } else {
       router.replace({name: 'Login'})
     }
@@ -148,7 +148,7 @@ export const useAuth = () => {
         user: user.value,
         token: newVal,
       }
-      local.save('_app_user', data);
+      local.save('app_user', data);
     }
   })
   loadSession()
