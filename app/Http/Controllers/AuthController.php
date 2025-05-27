@@ -14,13 +14,10 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
-// use Firebase\JWT\JWT;
-// use Firebase\JWT\Key;
 
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\Account;
-use App\Services\JWTService;
 use App\Models\PasswordReset;
 use App\Notifications\ForgotPassword;
 use App\Utils\Meta;
@@ -136,25 +133,12 @@ class AuthController extends Controller
     }
 
     public function refresh(Request $request) {
-        $authHandler = new JWTService;
-        try {
-            $token = $authHandler->refreshToken();
-            if(!$token) {
-                return $this->failed('Token refresh failed');
-            }
-            return $this->success([ 'token' => $token]);
-
-        } catch (Exception $e){
-           return $this->failed('Token refresh failed');
-        }
+        
     }
 
     public function revoke_token(Request $request) {
-        // $authHandler = new JWTService;
-        // $authHandler->revokeToken();
+        
         Auth::logout();
-        // $request->session()->invalidate();
-        // $request->session()->regenerateToken();
         return $this->success([
             'message' => 'Logged out'
         ]);

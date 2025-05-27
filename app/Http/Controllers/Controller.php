@@ -8,7 +8,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Hash;
-use App\Services\JWTService;
 use App\Models\User;
 use Illuminate\Support\HtmlString;
 use App\Utils\Meta;
