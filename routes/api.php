@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 // Sanctum::routes();
-Broadcast::routes(['middleware' => [JWTVerify::class]]);
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Route::group(['namespace' => 'App\Http\Controllers'], function() {
     Route::group(['as'=> 'api.'], function () {
         Route::post('register', 'AuthController@register')->name('register');
@@ -23,7 +23,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
         Route::post('forgot-password', 'AuthController@forgot_password')->name('forgot_password');
         Route::post('reset-password', 'AuthController@reset_password')->name('reset_password');
         
-        Route::middleware(JWTVerify::class)->group(function () {           
+        Route::middleware(['auth:sanctum'])->group(function () {           
             Route::get('refresh_token', 'AuthController@refresh')->name('refresh');
             Route::match(['GET', 'POST'], 'revoke_token', 'AuthController@revoke_token')->name('logout');
             Route::get('user', 'AuthController@user');

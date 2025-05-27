@@ -5,29 +5,17 @@
                 <div class="flex justify-content-between mb-3">
                     <div>
                         <span class="block text-500 font-medium mb-3">Wallet Balance</span>
-                        <div class="text-900 font-medium text-xl">{{ formatCurrency(balances.wallet_balance) }}</div>
+                        <div class="text-900 font-medium text-xl">0.00</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-chart-line text-blue-500 text-xl"></i>
+                        <i class="pi pi-wallet text-blue-500 text-xl"></i>
                     </div>
                 </div>
                 <!-- <span class="text-green-500 font-medium">24 new </span>
                 <span class="text-500">since last visit</span> -->
             </div>
         </div>
-        <div class="col-12 lg:col-6 xl:col-3">
-            <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
-                    <div>
-                        <span class="block text-500 font-medium mb-3">Active Orders</span>
-                        <div class="text-900 font-medium text-xl">0</div>
-                    </div>
-                    <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width: 2.5rem; height: 2.5rem">
-                        <i class="pi pi-map-marker text-orange-500 text-xl"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
@@ -78,30 +66,21 @@
                 </DataTable>
               
             </div>
-            
-            <div>
-                <Card style="height: 40rem;">
-                    <template #title>Satisfaction Score</template>
-                    <template #subtitle></template>
-                    <template #content>
-                       
-                    </template>
-                </Card>
+        </div>
+
+         <div class="col-12 xl:col-6">
+            <div class="card md:mt-4 sm:mt-4 xs:mt-3">
+                <div class="flex align-items-center justify-content-between mb-4">
+                    <h5>Notifications</h5>
+                    <div>
+                        <!-- <Button icon="pi pi-ellipsis-v" class="p-button-text p-button-plain p-button-rounded" @click="$refs.menu1.toggle($event)"></Button> -->
+                        <!-- <Menu ref="menu1" :popup="true" :model="items"></Menu> -->
+                    </div>
+                </div>
             </div>
-            
         </div>
 
         <div class="col-12 xl:col-6">
-            <div>
-                <Card style="height: 40rem;">
-                    <template #title>Suggested Products</template>
-                    <template #subtitle>The best deals tailored for you in realtime</template>
-                    <template #content>
-                        
-                    </template>
-                </Card>
-            </div>
-
             <div class="card md:mt-4 sm:mt-4 xs:mt-3">
                 <div class="flex align-items-center justify-content-between mb-4">
                     <h5>Notifications</h5>

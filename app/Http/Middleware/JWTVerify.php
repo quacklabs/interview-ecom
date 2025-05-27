@@ -10,6 +10,7 @@ use DateTimeImmutable;
 use Exception;
 use App\Services\JWTService;
 use App\Models\TokenBlacklist;
+use Illuminate\Support\Facades\Log;
 
 
 class JWTVerify
@@ -28,6 +29,7 @@ class JWTVerify
         try {
             
             $token = $publicHelper->GetAndDecodeJWT();
+            Log::info(json_encode($token));
             if ($token && TokenBlacklist::where('token_id', base64_encode($token))->exists()) {
                 return response()->json(['error' => 'Token revoked'], 401);
             }

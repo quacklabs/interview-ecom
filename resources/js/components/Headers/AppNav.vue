@@ -50,7 +50,6 @@ export default defineComponent({
         const router = useRouter();
         const outsideClickListener = ref<any>(null);
         const topbarMenuActive = ref<boolean>(false);
-        const wallet_balance = ref<string>("Connect Wallet")
         const { logo } = useConfig()
 
         const topbarMenuClasses = computed(() => {
@@ -64,7 +63,6 @@ export default defineComponent({
             bindOutsideClickListener();
         });
 
-
         onBeforeUnmount(() => {
             unbindOutsideClickListener();
         });
@@ -77,8 +75,7 @@ export default defineComponent({
             topbarMenuActive.value = false;
             router.push({name: 'AccountSettings'});
         };
-        // // return { topbarMenuClasses, title, onTopBarMenuButton }
-
+        
         const isOutsideClicked = (event: { target: Node | null; }) => {
             const sidebarEl = document.querySelector('.layout-sidebar');
             const topbarEl = document.querySelector('.layout-menu-button');
@@ -114,7 +111,7 @@ export default defineComponent({
             }
         });
 
-        return { title, topbarMenuClasses, onSettingsClick, onMenuToggle, onTopBarMenuButton, wallet_balance, logo }
+        return { title, topbarMenuClasses, onSettingsClick, onMenuToggle, onTopBarMenuButton, logo }
     }
 })
 </script>

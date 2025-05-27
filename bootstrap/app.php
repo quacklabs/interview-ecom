@@ -23,8 +23,12 @@ return Application::configure(basePath: dirname(__DIR__))
             ->group(base_path('routes/web.php'));
         }
     )->withMiddleware(function (Middleware $middleware) {
-        //
-        // 'cors'          => \App\Http\Middleware\Cors::class, // added
+        $middleware->statefulApi();
+        $middleware->alias([
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+        ]);
         $middleware->redirectGuestsTo('/auth/login');
     })
     ->withExceptions(function (Exceptions $exceptions) {

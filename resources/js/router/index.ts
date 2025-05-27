@@ -117,7 +117,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/account',
     name: 'App',
     component: AppLayout,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, rbac: true },
     children: [
       {
         path: 'dashboard',
@@ -144,7 +144,14 @@ router.beforeEach((to, from, next) => {
         authHandler.logout()
         next({name: 'Login'});
       } else {
-        next();
+        const rbac_enabled = to.matched.some(record => record.meta.rbac);
+
+        if(authHandler.user.assigned_roles.contains('admin')) {
+          next()
+        } else {
+          next({name: 'Home'})
+        }
+        
       }
     } else {
       next();

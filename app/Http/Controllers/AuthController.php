@@ -14,8 +14,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+// use Firebase\JWT\JWT;
+// use Firebase\JWT\Key;
 
 use App\Models\User;
 use App\Models\Profile;
@@ -126,9 +126,9 @@ class AuthController extends Controller
             return $this->failed('The provided credentials are incorrect');
         }
         
-        $authHandler = new JWTService;
+        $token = $user->createToken( $credentials['email'])->plainTextToken;
         
-        $token = $authHandler->GenerateToken($user);
+        // $token = $authHandler->GenerateToken($user);
         return $this->success([
             'token' => $token,
             'user' => $user
