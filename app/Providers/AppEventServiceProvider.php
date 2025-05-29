@@ -11,7 +11,7 @@ use App\Listeners\AccountRegisterNotify;
 use App\Events\EmailVerified;
 use App\Listeners\EmailVerification;
 
-class EventServiceProvider extends ServiceProvider {
+class AppEventServiceProvider extends ServiceProvider {
 
     /**
      * The event listener mappings for the application.

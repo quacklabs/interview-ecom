@@ -4,11 +4,28 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\App;
 use App\Utils\Meta;
+use Dedoc\Scramble\Support\Generator\OpenApi;
+use Dedoc\Scramble\Http\Controllers\DocsController;
 
-
-Route::get('/docs', function (Dedoc\Scramble\Support\Generator\OpenApi $openApi) {
-    return response()->json($openApi->toArray());
+// API Documentation Routes - MUST come before any catch-all routes
+// Route::get('/docs', [DocsController::class, 'index']);
+// Route::get('/docs', fn () => view('scramble::docs', ['config' => config('scramble')]));
+// Route::get('/docs.json', function (OpenApi $openApi) {
+    // return response()->json($openApi->toArray());
+// });
+Route::get('/docs', function () {
+    return view('scramble::docs', [
+        // Required structure for Scramble 0.12
+        'config' => [
+            'basePath' => '/docs',
+            'apiPath' => '/docs.json',
+            'title' => config('scramble.info.title', 'API Docs'),
+            'description' => config('scramble.info.description', ''),
+            'version' => config('scramble.info.version', '1.0.0'),
+        ]
+    ]);
 });
+
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
     Route::get('/auth/email/verification-status/{email}', 'AuthController@showVerification')->name('verification.notice');
@@ -25,12 +42,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         Route::get("/{name}", 'Controller@showVueRoute')->whereIn('name', ['auth', 'account']);
         Route::get("/{path}", "Controller@showVueRoute")->where('path', '.+');
     });
-    Route::get('/docs', fn () => view('scramble::docs'));
 
-    // Route::get('/docs', \Dedoc\Scramble\Http\Controllers\DocsController::class);
-    Route::get('{any}', 'Controller@showVueRoute')->where('any', '^(?!docs).*$');;
+    Route::get('/{path}', "Controller@showVueRoute")
+        ->where('path', '^(?!docs|docs\.json).*$')
+        ->name('vue.catchall');
 
     // Route::fallback('Controller@showVueRoute');
 });
-Route::fallback('\App\Http\Controllers\Controller@showVueRoute')->where('any', '^(?!docs).*$');;
+// Route::fallback('\App\Http\Controllers\Controller@showVueRoute')->where('any', '^(?!docs).*$');;
 

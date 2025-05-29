@@ -8,7 +8,6 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\User;
 
-
 class EmailVerificationNotification extends Notification implements ShouldQueue {
     use Queueable;
 
@@ -48,7 +47,7 @@ class EmailVerificationNotification extends Notification implements ShouldQueue 
 
         // dd('will send verification');
         return (new MailMessage)
-            ->subject('Trading Account Activated')
+            ->subject('Account Activated')
             ->view('emails.welcome', [
                 'name' => $this->name
             ]);

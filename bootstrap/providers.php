@@ -4,5 +4,5 @@ return [
     App\Providers\AppServiceProvider::class,
     Spatie\Permission\PermissionServiceProvider::class,
     App\Providers\PaginationProvider::class,
-    App\Providers\EventServiceProvider::class,
+    App\Providers\AppEventServiceProvider::class
 ];

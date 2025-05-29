@@ -14,9 +14,32 @@ use Illuminate\Support\Facades\Broadcast;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// Sanctum::routes();
-Broadcast::routes(['middleware' => ['auth:sanctum']]);
+/**
+ * @OA\Info(
+ *      version="1.0.0",
+ *      title="Laravel API Documentation",
+ *      description="L5 Swagger OpenAPI description",
+ *      @OA\Contact(
+ *          email="admin@admin.com"
+ *      ),
+ *      @OA\License(
+ *          name="Apache 2.0",
+ *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
+ *      )
+ * )
+ *
+ * @OA\Server(
+ *      url=L5_SWAGGER_CONST_HOST,
+ *      description="Demo API Server"
+ * )
+ */
+
 Route::group(['namespace' => 'App\Http\Controllers'], function() {
+    /**
+    * @OA\PathItem(
+    *     path="/v1"
+    * )
+    */
     Route::group(['as'=> 'api.'], function () {
         Route::post('register', 'AuthController@register')->name('register');
         Route::post('login', 'AuthController@login')->name('login');
