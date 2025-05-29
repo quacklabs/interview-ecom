@@ -76,8 +76,9 @@ export default defineComponent({
       const handleLogin = async () => {
         // isLoading.value = true;
         // error.value = null;
-        displayLoader()
+        if (!(await v$.value.$validate())) return;
 
+        displayLoader()
         authHandler.login({email: form.email, password: form.password})
         .then((response) => {
           destroyLoader()

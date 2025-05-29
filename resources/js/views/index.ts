@@ -3,6 +3,7 @@ export { default as Login } from './Login.vue'
 export { default as Register } from './Register.vue'
 
 export { default as Dashboard } from './App/Dashboard.vue'
+export { default as Categories } from './App/Categories.vue'
 export { default as NotFound } from './404.vue'
 export { default as RegistrationSuccess } from './RegistrationSuccess.vue'
 export { default as VerificationStatus } from './VerificationStatus.vue'

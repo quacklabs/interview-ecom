@@ -18,6 +18,7 @@ import {
   VerificationFailed,
   VerificationSuccess,
   ResendSuccess,
+  Categories
 } from '../views'
 
 
@@ -124,6 +125,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Account',
         component: Dashboard
       },
+      {
+        path: 'categories',
+        name: 'Categories',
+        component: Categories
+      }
     ]
   },
   // {

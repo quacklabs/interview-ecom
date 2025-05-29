@@ -26,7 +26,7 @@ export default defineComponent({
             items: [
                 { label: 'View Products', icon: 'pi pi-fw pi-eye', to: {name: 'Account'} },
                 { label: 'Add Products', icon: 'pi pi-fw pi-plus', to: {name: 'Account'} },
-                { label: 'Products Categories', icon: 'pi pi-fw pi-box', to: {name: 'Account'} },
+                { label: 'Products Categories', icon: 'pi pi-fw pi-box', to: {name: 'Categories'} },
             ]
         }
         const cmsMenu: MenuGroup = {

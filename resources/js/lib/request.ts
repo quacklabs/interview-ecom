@@ -4,6 +4,13 @@ import { computed, type ComputedRef } from "vue";
 import { useAuth } from "./auth";
 import { StorageModule } from "./store";
 
+
+enum RequestType {
+    json = 'json',
+    file = 'file',
+    unknown = 'json' // we'll use a json default fallback for now. 
+}
+
 export const useNetwork = () => {
 
     const handler = axios.create({
@@ -21,10 +28,10 @@ export const useNetwork = () => {
         return ''
     })
 
-    const config = computed(() => {
+    const config = computed((multipart: boolean = false) => {
         return  {
             headers: {
-                "Content-Type" : 'application/json',
+                "Content-Type" : multipart ?? 'application/json',
                 "Accept" : 'application/json',
                 "Authorization" : auth_header.value,
                 "Access-Control-Allow-Origin": "*"
@@ -32,9 +39,9 @@ export const useNetwork = () => {
         }
     })
 
-    function push<T, S>(endpoint: string, data: S): Promise<APIResponse<T>> {
+    function push<T, S>(endpoint: string, data: S, type?: RequestType = RequestType.json): Promise<APIResponse<T>> {
         return new Promise<APIResponse<T>>((resolve, reject) => {
-            handler.post(endpoint, data, config.value)
+            handler.post(endpoint, data, config(type == RequestType.file).value)
             .then((response) => {
                 if(response.status == 200 || response.status == 201) {
                     const resp: APIResponse<T> = {
