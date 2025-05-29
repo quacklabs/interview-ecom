@@ -5,6 +5,10 @@ use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\App;
 use App\Utils\Meta;
 
+
+Route::get('/docs', function (Dedoc\Scramble\Support\Generator\OpenApi $openApi) {
+    return response()->json($openApi->toArray());
+});
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
     Route::get('/auth/email/verification-status/{email}', 'AuthController@showVerification')->name('verification.notice');
@@ -21,9 +25,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         Route::get("/{name}", 'Controller@showVueRoute')->whereIn('name', ['auth', 'account']);
         Route::get("/{path}", "Controller@showVueRoute")->where('path', '.+');
     });
+    Route::get('/docs', fn () => view('scramble::docs'));
 
-    Route::fallback('Controller@showVueRoute');
+    // Route::get('/docs', \Dedoc\Scramble\Http\Controllers\DocsController::class);
+    Route::get('{any}', 'Controller@showVueRoute')->where('any', '^(?!docs).*$');;
+
+    // Route::fallback('Controller@showVueRoute');
 });
-
-Route::fallback('\App\Http\Controllers\Controller@showVueRoute');
+Route::fallback('\App\Http\Controllers\Controller@showVueRoute')->where('any', '^(?!docs).*$');;
 

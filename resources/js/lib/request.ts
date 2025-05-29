@@ -28,20 +28,20 @@ export const useNetwork = () => {
         return ''
     })
 
-    const config = computed((multipart: boolean = false) => {
+    const config = (multipart: boolean | false) => {
         return  {
             headers: {
-                "Content-Type" : multipart ?? 'application/json',
+                "Content-Type" : (multipart == false) ? 'application/json' : 'multipart/form-data',
                 "Accept" : 'application/json',
                 "Authorization" : auth_header.value,
                 "Access-Control-Allow-Origin": "*"
             }
         }
-    })
+    }
 
-    function push<T, S>(endpoint: string, data: S, type?: RequestType = RequestType.json): Promise<APIResponse<T>> {
+    function push<T, S>(endpoint: string, data: S, type: RequestType = RequestType.json): Promise<APIResponse<T>> {
         return new Promise<APIResponse<T>>((resolve, reject) => {
-            handler.post(endpoint, data, config(type == RequestType.file).value)
+            handler.post(endpoint, data, config(type == RequestType.file))
             .then((response) => {
                 if(response.status == 200 || response.status == 201) {
                     const resp: APIResponse<T> = {

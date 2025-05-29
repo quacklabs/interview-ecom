@@ -1,11 +1,11 @@
 <template>
 	<div class="card">
-        <div class="font-semibold text-xl mb-4">Filtering</div>
+        <div class="font-semibold text-xl mb-4">Categories</div>
         <DataTable
-            :value="categories"
+            :value="categories.all"
             :paginator="true"
             :rows="10"
-            dataKey="id"
+            dataKey="name"
             :rowHover="true"
             v-model:filters="filters"
             filterDisplay="menu"
@@ -38,6 +38,7 @@
             
             <Column field="verified" header="Actions" dataType="boolean" bodyClass="text-center" style="min-width: 8rem">
                 <template #body="{ data }">
+                    <Button type="danger" @click="deleteCategory(data.id)">Delete</Button>
                     
                 </template>
             </Column>
@@ -66,10 +67,9 @@
 import { defineComponent, ref, reactive, onBeforeMount, computed } from 'vue';
 import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
 import { useGlobalLoader } from 'vue-global-loader'
-import { useNetwork } from '../../lib'
+import { useNetwork, notify } from '../../lib'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
-
 
 export default defineComponent({
     name: 'YourComponentName',
@@ -79,9 +79,9 @@ export default defineComponent({
         const req = useNetwork()
         const displayForm = ref(false)
         
-        const categories = reactive<{ name: string; image: string }[]>([
-
-        ]);
+        const categories = reactive({
+            all: ([])
+        });
 
         const form = reactive({
             name: ""
@@ -96,7 +96,6 @@ export default defineComponent({
 
         const { isLoading, displayLoader, destroyLoader } = useGlobalLoader()
 
-        
         
         function initFilters(): void {
             filters.value = {
@@ -131,17 +130,52 @@ export default defineComponent({
             if (!(await v$.value.$validate())) return;
 
             displayLoader()
+            req.push('add_category', {name: form.name}).then((resp) => {
+                categories.push(resp.data)
+            }).catch((error) => {
+                notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: error.message
+                })
+
+            }).finally(() => destroyLoader())
 
         }
 
+        const deleteCategory = (id: number) => {
+            displayLoader()
+            req.push('delete_category', {id: id}).then((resp) => {
+                loadCategories()
+            }).catch((error) => {
+                notify({
+                    type: 'error',
+                    title: 'Error',
+                    text: error.message
+                })
+            }).finally(() => destroyLoader())
+        }
+
+        const loadCategories = () => {
+            displayLoader()
+            req.fetch('get_categories').then((resp) => {
+                const data: PaginatedResponse = resp.data;
+                
+                categories.all = data.data;
+                // pagination.totalRecords = data.meta.total;
+                // pagination.page = data.meta.current_page;
+            }).finally(() => destroyLoader())
+        }
+
         onBeforeMount(() => {
+            loadCategories()
             initFilters();
         });
 
         return {
             filters,
             isLoading,
-            showForm, displayForm, form, v$, save
+            showForm, displayForm, form, v$, save, categories, deleteCategory
         };
     }
 });

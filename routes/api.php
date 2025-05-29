@@ -25,18 +25,25 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
         
 
         // Authenticated Routes
-        Route::middleware(['auth:sanctum'])->group(function () {           
-            Route::get('refresh_token', 'AuthController@refresh')->name('refresh');
-            Route::match(['GET', 'POST'], 'revoke_token', 'AuthController@revoke_token')->name('logout');
+        Route::middleware(['auth:sanctum'])->group(function () {
+            // Route::get('refresh_token', 'AuthController@refresh')->name('refresh');
+            // Route::match(['GET', 'POST'], 'revoke_token', 'AuthController@revoke_token')->name('logout');
             Route::get('user', 'AuthController@user');
-            
-            Route::get('recent_transactions', 'ServicesController@recent_transactions')->name('recent_transactions');
 
-            // Account Service
-            Route::get('wallet_balance', 'AccountController@wallet_balance')->name('wallet_balance');
-            Route::post('update_password', 'AccountController@update_password')->name('update_password');
-            Route::post('update_profile', 'AccountController@update_profile')->name('update_profile');
-            Route::get('get_profile', 'AccountController@get_profile')->name('get_profile'); 
+            
+            // Route::get('recent_transactions', 'ServicesController@recent_transactions')->name('recent_transactions');
+
+            // // Account Service
+            // Route::get('wallet_balance', 'AccountController@wallet_balance')->name('wallet_balance');
+            // Route::post('update_password', 'AccountController@update_password')->name('update_password');
+            // Route::post('update_profile', 'AccountController@update_profile')->name('update_profile');
+            // Route::get('get_profile', 'AccountController@get_profile')->name('get_profile'); 
+
+            Route::middleware(['role:admin'])->group(function() {
+                Route::post('add_category', 'AdminController@add_category')->name('add_product_category');
+                Route::get('get_categories', 'AdminController@get_categories');
+                Route::post('delete_category', 'AdminController@delete_category');
+            });
         });
     })->middleware(\App\Http\Middleware\Cors::class);
 });

@@ -145,6 +145,13 @@ const routes: Array<RouteRecordRaw> = [
   //     },
   //   ]
   // }
+  {
+    path: '/docs',
+    beforeEnter: (to, from, next) => {
+      // Let Laravel handle this route
+      window.location.href = to.fullPath;
+    }
+  },
   { path: '/:pathMatch(.*)*', component: NotFound },
     
 ]
